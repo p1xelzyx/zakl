@@ -160,6 +160,7 @@
             margin: 20px 20px 0 0;
             border-radius: 10px;
         }
+
         #exerciseList {
             display: none;
             position: fixed;
@@ -168,22 +169,54 @@
             transform: translate(-50%, -50%);
             width: 80vw;
             height: 80vh;
-            border: 3px solid white;
+            border: 2px solid #6829FF;
+            border-radius: 10px;
+            box-shadow: 0px 0px 36px 5px rgba(0,0,0,0.75);
+            background-color: #19171a;
         }
+
+
         #exerciseListContent {
             position: relative;
+            height: 100%;
+            width: 100%;
         }
+
         #closeExerciseList {
+            
             position: absolute;
             top: 0;
             right: 0;
-            background-color: red;
-            width: 30px;
-            height: 30px;
+            padding: 15px;
+            border-top-right-radius: 8px;
         }
+
+        #closeExerciseList:hover {
+            background-color: crimson;
+        }
+
         .blured {
             pointer-events: none;
             filter: blur(20px);
+        }
+        #fullExerciseList {
+            position: absolute;
+            top: 10%;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            overflow-y: scroll;
+            border-radius: 20px;
+        }
+        .fullExerciseItem {
+            width: 100px;
+            height: 100px;
+            border-radius: 12px;
+            padding: 20px;
+            background-color: #262626;
+            margin: 40px;
         }
     </style>
 </head>
@@ -265,27 +298,48 @@
             </div>
         </div>
     </div>
-    <div id="exerciseList"><div id="exerciseListContent">
-        <img src="{{ url_for('static', filename='x.png') }}" alt="Close" id="closeExerciseList">
-    </div></div>
+    <div id="exerciseList">
+        <div id="exerciseListContent">
+            <svg id="closeExerciseList" width="20" height="20" viewBox="0 0 20 20">
+                <line x1="2" y1="2" x2="18" y2="18" stroke="currentColor" stroke-width="3" />
+                <line x1="18" y1="2" x2="2" y2="18" stroke="currentColor" stroke-width="3" />
+            </svg>
+            <div id="fullExerciseList" class="betterScroll">
+                <div class="fullExerciseItem">bench press</div>
+                <div class="fullExerciseItem">pull ups 2</div>
+                <div class="fullExerciseItem">leg extension</div>
+                <div class="fullExerciseItem">weighted dips</div>
+            </div>
+        </div>
+    </div>
     <script>
         const addExercise = document.getElementById("addExercise");
         const exerciseList = document.getElementById("exerciseList");
         const pageWrap = document.getElementById("pageWrap");
         let exerciseListShown = false;
-        addExercise.addEventListener("click", () => {
-            exerciseListShown = !exerciseListShown;
-            updateExerciseList();
-        });
+
         function updateExerciseList() {
-            if(exerciseListShown) {
-                exerciseList.style.display="block";
+            if (exerciseListShown) {
+                exerciseList.style.display = "block";
                 pageWrap.classList.add('blured');
             } else {
-                exerciseList.style.display="none";
+                exerciseList.style.display = "none";
                 pageWrap.classList.remove("blured");
             }
         }
+        let clicks = {
+            "addExercise": () => {
+                exerciseListShown = true;
+                updateExerciseList();
+            },
+            "closeExerciseList": () => {
+                exerciseListShown = false;
+                updateExerciseList();
+            }
+        }
+        document.addEventListener("click", e => {
+            clicks[e.target.id]?.();
+        });
     </script>
 
 </body>

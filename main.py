@@ -6,6 +6,7 @@ import bcrypt
 import base64
 import uuid
 
+
 app = Flask(__name__)
 
 db = TinyDB('db.json')
