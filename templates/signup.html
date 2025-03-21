@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <input type="text" id="usernameInput" placeholder="Username">
+    <input type="password" id="passwordInput" placeholder="Password">
+    <button id="loginBtn">Login</button>
+    <button id="registerBtn">Register</button>
+    <script>
+        const usernameInput = document.getElementById("usernameInput");
+        const passwordInput = document.getElementById("passwordInput");
+        const loginBtn = document.getElementById("loginBtn");
+        const registerBtn = document.getElementById("registerBtn");
+
+
+        window.onload = function() {
+            $.ajax({
+                type: "POST",
+                url: "/checkSession",
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function (data) {
+                    if (data.status == "ok") {
+                        window.location.href = "/dashboard";
+                    }
+                },
+                error: function (errMsg) {
+                    console.log(errMsg);
+                }
+            });
+        };
+
+
+        registerBtn.addEventListener("click", () => {
+            $.ajax({
+                type: "POST",
+                url: "/registerUser",
+                data: JSON.stringify({ username: usernameInput.value, password: passwordInput.value }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data); 
+                },
+                error: function (errMsg) {
+                    console.log(errMsg);
+                }
+            });
+        });
+
+        loginBtn.addEventListener("click", () => {
+            $.ajax({
+                type: "POST",
+                url: "/loginUser",
+                data: JSON.stringify({ username: usernameInput.value, password: passwordInput.value }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    if(data.status == "ok") {
+                        window.location.href = "/dashboard";
+                    }
+                },
+                error: function (errMsg) {
+                    console.log(errMsg);
+                }
+            });
+        })
+    </script>
+</body>
+
+</html>

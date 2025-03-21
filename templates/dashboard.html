@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dashboard</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <button id="logoutBtn">logout</button>
+    <a id="viewWorkoutPlan" href="/workoutPlan">View workout plan</a>
+    
+    <script src="{{ url_for('static', filename='checkSession.js') }}"></script>
+    <script>
+        const logoutBtn = document.getElementById("logoutBtn");
+
+
+
+        logoutBtn.addEventListener("click", () => {
+            $.ajax({
+                type: "POST",
+                url: "/logout",
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function (data) {
+                    if (data.status == "ok") {
+                        window.location.href = "/";
+                    }
+                },
+                error: function (errMsg) {
+                    console.log(errMsg);
+                }
+            });
+        });
+
+
+        
+    
+    </script>
+</body>
+</html>

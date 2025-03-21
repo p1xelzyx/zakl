@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>workout plan</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        /*
+            purple #6829FF
+            gray #262626
+            white: #F9F9F9
+        */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #19171a;
+            color: #F9F9F9;
+            height: 100vh;
+            font-family: monospace;
+        }
+
+        /*div {
+            border: 1px solid white;
+        }*/
+        .pageWrap {
+            display: flex;
+            flex-direction: row;
+        }
+
+
+
+
+        .leftWrap {
+            height: 80vh;
+            width: 30vw;
+            display: flex;
+            flex-direction: column;
+            border: 4px solid #262626;
+            padding: 20px;
+            border-radius: 20px;
+            margin: 20px;
+        }
+
+        #newWorkout {
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+            background-color: #6829FF;
+            color: white;
+            margin-top: 30px;
+            font-size: 1.5em;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            transition: 0.2s all;
+            text-align: center;
+            border: 3px solid #6829FF;
+            font-weight: bold;
+
+        }
+
+        #newWorkout:hover {
+            box-shadow: inset 0 0px 0px 100px black;
+            cursor: pointer;
+            color: #6829FF;
+        }
+
+        .workoutItem {
+            /*background-color: #6829FF;*/
+            background-color: #262626;
+            width: 100%;
+            margin: 4px 0;
+            border-radius: 10px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            transition: 0.1s all;
+
+        }
+
+        .workoutItem:hover {
+            background-color: #6829FF;
+        }
+
+        .workoutList {
+            border-radius: 10px;
+            padding: 10px;
+            flex-grow: 1;
+            padding-bottom: 100px;
+            overflow-y: scroll;
+            /*background-color: #262626;*/
+        }
+
+        .exerciseItem {
+            margin: 20px;
+            background-color: #262626;
+            padding: 10px;
+            border-radius: 15px;
+            width: 150px;
+            height: 150px;
+        }
+
+        .exerciseWrap {
+            padding: 20px;
+            border-radius: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            overflow-y: scroll;
+            flex-grow: 1;
+        }
+
+        .rightWrap {
+            border: 4px solid #262626;
+            padding: 20px;
+            margin: 20px;
+            height: 80vh;
+            border-radius: 20px;
+            width: 50vw;
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        .betterScroll {
+            border: solid 1px #6829FF;
+            border-left: solid 10px #6829FF;
+        }
+
+        .betterScroll::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .betterScroll::-webkit-scrollbar-track {
+            display: none;
+        }
+
+        .betterScroll::-webkit-scrollbar-thumb {
+            background: #6829FF;
+            border-radius: 10px;
+            transition: 0.1s all;
+        }
+
+        .betterScroll::-webkit-scrollbar-thumb:hover {
+            background: #fff;
+        }
+
+        .rightBtn {
+            display: inline;
+            border: none;
+            padding: 20px;
+            font-size: 1.1em;
+            font-weight: bold;
+            background-color: #6829FF;
+            color: white;
+            width: 300px;
+            margin: 20px 20px 0 0;
+            border-radius: 10px;
+        }
+        #exerciseList {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vw;
+            height: 80vh;
+            border: 3px solid white;
+        }
+        #exerciseListContent {
+            position: relative;
+        }
+        #closeExerciseList {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: red;
+            width: 30px;
+            height: 30px;
+        }
+        .blured {
+            pointer-events: none;
+            filter: blur(20px);
+        }
+    </style>
+</head>
+
+<body>
+    <script src="{{ url_for('static', filename='checkSession.js') }}"></script>
+    <div class="pageWrap" id="pageWrap">
+        <div class="leftWrap" id="leftWrap">
+            <div class="workoutList betterScroll" id="workoutList">
+                <div class="workoutItem">push</div>
+                <div class="workoutItem">push</div>
+                <div class="workoutItem">push</div>
+                <div class="workoutItem">push</div>
+                <div class="workoutItem">push</div>
+                <div class="workoutItem">push</div>
+                <div class="workoutItem">push</div>
+                <div class="workoutItem">push</div>
+                <div class="workoutItem">push</div>
+                <div class="workoutItem">push</div>
+                <div class="workoutItem">push</div>
+                <div class="workoutItem">push</div>
+                <div class="workoutItem">push</div>
+                <div class="workoutItem">push</div>
+                <div class="workoutItem">push</div>
+                <div class="workoutItem">push</div>
+                <div class="workoutItem">push</div>
+                <div class="workoutItem">push</div>
+                <div class="workoutItem">push</div>
+                <div class="workoutItem">push</div>
+                <div class="workoutItem">push</div>
+                <div class="workoutItem">push</div>
+                <div class="workoutItem">push</div>
+            </div>
+
+            <button id="newWorkout">
+                New workout
+            </button>
+        </div>
+        <div class="rightWrap">
+            <div class="exerciseWrap betterScroll">
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+                <div class="exerciseItem">bench press</div>
+            </div>
+            <div>
+                <button id="addExercise" class="rightBtn">Add exercise</button>
+                <button id="exerciseManager" class="rightBtn">Exercise manager</button>
+            </div>
+        </div>
+    </div>
+    <div id="exerciseList"><div id="exerciseListContent">
+        <img src="{{ url_for('static', filename='x.png') }}" alt="Close" id="closeExerciseList">
+    </div></div>
+    <script>
+        const addExercise = document.getElementById("addExercise");
+        const exerciseList = document.getElementById("exerciseList");
+        const pageWrap = document.getElementById("pageWrap");
+        let exerciseListShown = false;
+        addExercise.addEventListener("click", () => {
+            exerciseListShown = !exerciseListShown;
+            updateExerciseList();
+        });
+        function updateExerciseList() {
+            if(exerciseListShown) {
+                exerciseList.style.display="block";
+                pageWrap.classList.add('blured');
+            } else {
+                exerciseList.style.display="none";
+                pageWrap.classList.remove("blured");
+            }
+        }
+    </script>
+
+</body>
+
+</html>
