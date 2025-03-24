@@ -96,9 +96,9 @@ def logout():
 def dashboard():
     return render_template("dashboard.html")
 
-@app.route("/workoutPlan")
-def workoutPlan():
-    return render_template("workoutPlan.html")
+@app.route("/workoutManager")
+def workoutManager():
+    return render_template("workoutManager.html")
 
 
 def hashText(text):
