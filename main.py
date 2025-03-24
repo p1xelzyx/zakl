@@ -100,6 +100,10 @@ def dashboard():
 def workoutManager():
     return render_template("workoutManager.html")
 
+@app.route("/workoutPlan")
+def workoutPlan():
+    return render_template("workoutPlan.html")
+
 
 def hashText(text):
     hashed_bytes = bcrypt.hashpw(text.encode('utf-8'), bcrypt.gensalt())

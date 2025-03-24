@@ -1,7 +1,1 @@
-register
-- naredi workout routine (lahko spremeniš kasneje)
-	- malo hardcoded / lahko dodaš svoje (ime, katere mšc dela -> lahko ai pomaga z tem), nek dobit slike za vse bi blo dobr 
-	- (kateri dnevi v tednu / split ki se pač ponavlja ni važno dan)
-
-- pogledaš kaj maš dons, med wrk si pišeš kva si naredu vse, kaj si skippov, kok repov...
-- analicticks za nazaj...
+..
