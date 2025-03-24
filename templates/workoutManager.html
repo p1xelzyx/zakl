@@ -204,7 +204,7 @@
             top: 10%;
             left: 20px;
             right: 20px;
-            bottom: 20px;
+            bottom: 100px;
             display: flex;
             flex-wrap: wrap;
             overflow-y: scroll;
@@ -217,6 +217,11 @@
             padding: 20px;
             background-color: #262626;
             margin: 40px;
+        }
+        #exerciseManager {
+            position: absolute;
+            left: 20px;
+            bottom: 20px;
         }
     </style>
 </head>
@@ -294,7 +299,6 @@
             </div>
             <div>
                 <button id="addExercise" class="rightBtn">Add exercise</button>
-                <button id="exerciseManager" class="rightBtn">Exercise manager</button>
             </div>
         </div>
     </div>
@@ -310,6 +314,7 @@
                 <div class="fullExerciseItem">leg extension</div>
                 <div class="fullExerciseItem">weighted dips</div>
             </div>
+            <button id="exerciseManager" class="rightBtn">Exercise manager</button>
         </div>
     </div>
     <script>
