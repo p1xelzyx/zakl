@@ -14,17 +14,14 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            background: linear-gradient(45deg, #0a0c1c, #030936);
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
         }
 
         .wrap {
-            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            border-radius: 10px;
-            border: 2px solid black;
         }
 
         .list {
@@ -51,39 +48,21 @@
             box-sizing: border-box;
             row-gap: 20px;
             column-gap: 20px;
+            box-shadow: inset 0 0 10px black;
         }
 
         .listItem,
         .fullListItem {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             box-sizing: border-box;
             padding: 8px;
             border-radius: 5px;
             border: 2px solid black;
         }
 
-        .btrScroll {
-            overflow-y: auto;
-        }
-
-        .btrScroll::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        /* Track */
-        .btrScroll::-webkit-scrollbar-track {
-            display: none;
-        }
-
-        /* Handle */
-        .btrScroll::-webkit-scrollbar-thumb {
-            background: #888;
-        }
-
-        /* Handle on hover */
-        .btrScroll::-webkit-scrollbar-thumb:hover {
-            background: #555;
+        .listItem {
+            margin-right: 20px;
         }
     </style>
 </head>
@@ -98,7 +77,7 @@
             <div class="listItem">Pull</div>
             <div class="listItem">Shoulders</div>
         </div>
-        <div class="fullList btrScroll">
+        <div class="fullList customScroll">
             <div class="fullListItem">rest</div>
             <div class="fullListItem">pull</div>
             <div class="fullListItem">lorem</div>
@@ -149,6 +128,73 @@
             <div class="fullListItem">test2</div>
         </div>
     </div>
+    <script>
+        function setBetterScroll(elements, style = {}) {
+            style.minTop ?? (style.minTop = 5);
+            style.maxBottom ?? (style.maxBottom = 5);
+            style.thumbHeight ?? (style.thumbHeight = 50);
+
+            if (typeof (elements) != "object") {
+                elements = [elements]
+            }
+            for (let element of elements) {
+                element.style.overflowY = "hidden";
+                element.style.position = "relative";
+
+
+
+
+
+                console.log(style)
+
+                const thumb = document.createElement("div");
+                thumb.style.position = "absolute";
+                thumb.style.right = "2px";
+                thumb.style.top = style.minTop + "px";
+                thumb.style.height = `${style.thumbHeight}px`;
+                thumb.style.width = "10px";
+                thumb.style.backgroundColor = "#000000";
+                thumb.style.borderRadius = "10px";
+                element.appendChild(thumb);
+
+                element.addEventListener("wheel", e => {
+
+                    scroll(e.deltaY);
+                })
+                function scroll(deltaY) {
+                    element.scrollTop += deltaY;
+
+
+                    let relativeZero = element.scrollTop + style.minTop;
+                    let relativeMax = element.scrollTop + element.clientHeight - style.thumbHeight - style.maxBottom;
+
+                    thumb.style.top = relativeZero + (element.scrollTop / (element.scrollHeight - element.clientHeight)) * (relativeMax - relativeZero) + "px";
+
+                }
+                let mouseDown = false;
+                let y = 0;
+                thumb.addEventListener("mousedown", e => {
+                    mouseDown = true;
+                    y = e.clientY;
+                })
+                document.addEventListener("mouseup", e => {
+                    mouseDown = false;
+                })
+                document.addEventListener("mousemove", e => {
+                    if (mouseDown) {
+                        let deltaY = e.clientY - y;
+                        let scrollRatio = (element.scrollHeight - element.clientHeight) / (element.clientHeight - style.thumbHeight - style.minTop - style.maxBottom);
+                        scroll(deltaY * scrollRatio);
+                        y = e.clientY; // Update y to avoid cumulative errors
+                    }
+                });
+
+
+            }
+        }
+        setBetterScroll(document.getElementsByClassName("customScroll"));
+
+    </script>
 </body>
 
 </html>
